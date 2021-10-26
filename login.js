@@ -1,3 +1,5 @@
+
+
 function savetoken(token){
 // whatever passes as token should save into local storage
     if (window.localStorage){
@@ -25,7 +27,7 @@ function userlogin(){
     setusername();
     $.ajax({
         type: 'POST',
-        url: '/login',
+        url: getAPIRoot() + '/login',
         data: ' {"userName":"'+ userName +'", "password":"'+ password +'"}', // or JSON.stringify ({name: 'jonas'}),
         success: function(data) {
             savetoken(data);

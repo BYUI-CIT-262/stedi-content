@@ -1,7 +1,7 @@
 //© 2021 Sean Murdock
 
 let userName = "";
-let password = "";
+
 let verifypassword = "";
 let passwordRegEx=/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!]).{6,40})/;
 
@@ -9,13 +9,7 @@ function setusername(){
     userName = $("#username").val();
 }
 
-function setuserpassword(){
-    password = $("#password").val();
-    var valid=passwordRegEx.exec(password);
-    if (!valid){
-        alert('Must be 6 digits, upper, lower, number, and symbol');
-    }
-}
+
 
 function setverifypassword(){
     verifypassword = $("#verifypassword").val();
@@ -46,19 +40,21 @@ function checkexpiredtoken(token){
     }
 }
 
-function userlogin(){
-    setuserpassword();
+
+
+function getUserPin(){
     setusername();
     $.ajax({
         type: 'POST',
-        url: '/login',
-        data: JSON.stringify({userName, password}),
+        url: getApiRoot() + '/twofactorlogin/'+ userName,
         success: function(data) {
-            window.location.href = "/timer.html#"+data;//add the token to the url
+            window.location.href = "/pin.html#"+ userName
         },
         contentType: "application/text",
         dataType: 'text'
     });
+        
+        
 
 }
 
@@ -123,6 +119,34 @@ var enterFunction = (event) =>{
     }
 }
 
-var passwordField = document.getElementById("password");
 
-passwordField.addEventListener("keyup", enterFunction);
+
+const getApiRoot = () => {
+    const hashTag = window.location.hash;
+    console.log('Hash tag '+ hashTag);
+
+    let apiRoot = hashTag === '#local' 
+                ? 'http://localhost:4567' 
+                : 'https://dev.stedi.me';
+
+    if (window.location.hostname.includes('-dev')){
+        apiRoot = 'https://dev.stedi.me';
+    
+    } else if (window.location.hostname.includes('stedi.me')){
+        apiRoot = 'https://setdi.me';
+    }
+    return apiRoot;
+}
+
+$(document).ready(
+
+    ()=>{
+        var userField = document.getElementById("username");
+        userField.onchange=setusername;        
+        userField.addEventListener("keyup", enterFunction);
+        
+        var loginButton = document.getElementById("loginbtn");
+        loginButton.onclick=userlogin;   
+    }
+
+);

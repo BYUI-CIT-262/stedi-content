@@ -17,16 +17,11 @@
 
     <form name="loginForm" id="login" method="post" >
         <p>
-            <label class="stepcount" for="phone number">Phone Number</label><br>
-            <input class="stepcount" type="text" id="username" name="username" size="25" onchange="setusername()" required >
+            <label class="stepcount" for="PIN">PIN</span></label><br>
+            <input class="stepcount" type="password" id="password" name="pwd" size="25" onchange="setuserpassword()" required >
         </p>
         <p>
-            <input class="btn btn-lg btn-primary" id="Pinbtn" type="button" onclick="getUserPin()" value="Send Text">
-        </p>
-    
-        
-        <p>
-            <a class="stepcount" id="newusr" href="/createcustomer.html">Create account</a>
+            <input class="btn btn-lg btn-primary" id="loginbtn" type="button" onclick="userlogin()" value="login">
         </p>
     </form>
 </div>
@@ -34,6 +29,6 @@
 </div>
 
 <script src="jquery-3.1.1.min.js"></script>
-<script src="manageuser.js"></script>
+<script src="pin.js"></script>
 <script src="managecustomer.js"></script>
 </html>
